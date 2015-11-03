@@ -32,6 +32,7 @@ Interface configuration
       ipaddress => '169.254.0.1',
       method    => 'static',
       netmask   => '255.255.0.0',
+      gateway   => '169.254.0.254',
       onboot    => 'true',
     }
 

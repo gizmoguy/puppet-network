@@ -49,7 +49,7 @@ Puppet::Type.type(:network_config).provide(:interfaces) do
 
     # These fields are going to get rearranged to resolve issue 16
     # https://github.com/adrienthebo/puppet-network/issues/16
-    attr_accessor :ipaddress, :netmask, :family, :method, :mtu, :mode
+    attr_accessor :ipaddress, :netmask, :gateway, :family, :method, :mtu, :mode
 
     # Options hash
     attr_reader :options
@@ -67,6 +67,7 @@ Puppet::Type.type(:network_config).provide(:interfaces) do
         :hotplug   => @hotplug,
         :ipaddress => @ipaddress,
         :netmask   => @netmask,
+        :gateway   => @gateway,
         :family    => @family,
         :method    => @method,
         :mtu       => @mtu,
@@ -224,6 +225,7 @@ Puppet::Type.type(:network_config).provide(:interfaces) do
             case key
             when 'address';         Instance[name].ipaddress    = val
             when 'netmask';         Instance[name].netmask      = val
+            when 'gateway';         Instance[name].gateway      = val
             when 'mtu';             Instance[name].mtu          = val
             when 'vlan-raw-device'; Instance[name].mode         = :vlan
             else                    Instance[name].options[key] << val
@@ -287,6 +289,7 @@ Puppet::Type.type(:network_config).provide(:interfaces) do
       [
         [:ipaddress, 'address'],
         [:netmask,   'netmask'],
+        [:gateway,   'gateway'],
         [:mtu,       'mtu'],
       ].each do |(property, section)|
         stanza << "#{section} #{provider.send property}" if provider.send(property) and provider.send(property) != :absent

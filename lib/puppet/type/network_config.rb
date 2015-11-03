@@ -31,6 +31,10 @@ Puppet::Type.newtype(:network_config) do
     desc "The subnet mask to apply to the interface"
   end
 
+  newproperty(:gateway) do
+    desc "The gateway to use for the default route"
+  end
+
   newproperty(:method) do
     desc "The method for determining an IP address for the interface"
     newvalues(:static, :manual, :dhcp, :loopback)
