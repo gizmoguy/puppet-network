@@ -93,7 +93,9 @@ Puppet::Type.type(:network_route).provide(:routes) do
       raise Puppet::Error, "#{provider.name} is missing the required parameter 'gateway'." if provider.gateway.nil?
       raise Puppet::Error, "#{provider.name} is missing the required parameter 'interface'." if provider.interface.nil?
 
-      contents << "#{provider.network} #{provider.netmask} #{provider.gateway} #{provider.interface} #{provider.options}\n"
+      contents << "#{provider.network} #{provider.netmask} #{provider.gateway} #{provider.interface}"
+      contents << " #{provider.options}" if provider.options and provider.options != :absent
+      contents << "\n"
     end
 
     contents.join
